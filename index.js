@@ -50,7 +50,6 @@ const findFeeling = async (_head = head) => {
     const newFeeling = findFeeling(_head.children[question - 1]);
     return newFeeling;
   }
-
 }
 
 findFeeling();

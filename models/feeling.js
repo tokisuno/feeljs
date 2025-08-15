@@ -18,7 +18,7 @@ const feelingSchema = new mongoose.Schema({
     required: true
   },
   date: {
-    type: Object,
+    type: Number,
     required: true
   }
 })
