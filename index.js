@@ -14,6 +14,7 @@ const Feeling = require('./models/feeling');
 let head = data;
 
 const findFeeling = async (_head = head) => {
+  console.log(_head);
   if (!_head.children) {
     console.log("You are feeling...");
 
@@ -39,16 +40,17 @@ const findFeeling = async (_head = head) => {
   helper.printFeelings(_head);
   const question = prompt(chalk.underline.green("How are you feeling right now?: "))
 
-  console.clear();
+  // console.clear();
 
   if (!helper.handleInput(question, _head)) {
     console.log("[ERR] Invalid input; try again!")
-    findFeeling(_head);
+    const newFeeling = findFeeling(_head);
+    return newFeeling;
+  } else {
+    const newFeeling = findFeeling(_head.children[question - 1]);
+    return newFeeling;
   }
 
-  const newFeeling = findFeeling(_head.children[question - 1]);
-
-  return newFeeling;
 }
 
 findFeeling();
