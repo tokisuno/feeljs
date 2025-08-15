@@ -10,6 +10,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "prompt-sync": "^4.2.0"
+    "chalk": "^5.5.0",
+    "dotenv": "^17.2.1",
+    "figlet": "^1.8.2",
+    "mongodb": "^6.18.0",
+    "mongoose": "^8.17.1",
+    "ora": "^8.2.0",
+    "prompt-sync": "^4.2.0",
+    "yocto-spinner": "^1.0.0"
   }
 }

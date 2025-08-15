@@ -1,36 +1,49 @@
 const data = require('./data.json')
+const mongoose = require('mongoose')
+
 const prompt = require('prompt-sync')({ sigint: true })
+const helper = require('./utils/helper');
+
+const { default: chalk } = require('chalk');
+const figlet = require('figlet');
+
+const { default: _, oraPromise } = require('ora');
+
+const Feeling = require('./models/feeling');
 
 let head = data;
 
-const handleInput = (input, h) => {
-  if (input > h.children.length || input <= 0) {
-    return false
-  }
-  return true;
-}
-
-const printFeelings = (_head) => {
-  _head.children.forEach((feeling, i) => {
-    console.log(`${i + 1} :: ${feeling.name}`)
-  })
-}
-
-const findFeeling = (_head = head) => {
+const findFeeling = async (_head = head) => {
   if (!_head.children) {
-    console.log(`You are feeling ${_head.name.toLowerCase()}`)
-    return _head.name;
+    console.log("You are feeling...");
+
+    const feeling = new Feeling({
+      feeling: _head.name,
+      date: Date.now()
+    })
+
+    await oraPromise(feeling.save(), { spinner: "clock" })
+
+    mongoose.connection.close();
+
+    figlet(_head.name, { font: "Pagga" }, (error, data) => {
+      if (error) {
+        console.log(error)
+        return;
+      }
+      console.log(data);
+    })
+    return;
   }
 
-  printFeelings(_head);
+  helper.printFeelings(_head);
+  const question = prompt(chalk.underline.green("How are you feeling right now?: "))
 
-  const question = prompt("How are you feeling right now?: ")
+  console.clear();
 
-  while (true) {
-    if (!handleInput(question, _head)) {
-      console.log("[ERR] Invalid input; try again!")
-    }
-    break;
+  if (!helper.handleInput(question, _head)) {
+    console.log("[ERR] Invalid input; try again!")
+    findFeeling(_head);
   }
 
   const newFeeling = findFeeling(_head.children[question - 1]);
