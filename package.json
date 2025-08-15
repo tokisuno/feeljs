@@ -19,5 +19,8 @@
     "ora": "^8.2.0",
     "prompt-sync": "^4.2.0",
     "yocto-spinner": "^1.0.0"
+  },
+  "devDependencies": {
+    "jsdoc-to-markdown": "^9.1.2"
   }
 }
