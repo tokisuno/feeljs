@@ -14,7 +14,6 @@ const Feeling = require('./models/feeling');
 let head = data;
 
 const findFeeling = async (_head = head) => {
-  console.log(_head);
   if (!_head.children) {
     console.log("You are feeling...");
 
